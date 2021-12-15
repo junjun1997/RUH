@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hk.ruh.review">
+
+<!-- 전체 리뷰리스트 -->
+	<select id="reviewlist"  resultType="reviewDto">
+		SELECT *
+		FROM REVIEW
+	</select>
+	
+<!-- 	식당이름으로 단어포함 식당리스트 -->
+	<select id="selectres"  resultType="restlistDto" parameterType="map">
+		SELECT * FROM RESLIST
+		WHERE NAME LIKE '%' ||  #{title} || '%'
+	</select>
+	
+<!-- 	식당리스트로 해당 범주 구하기 -->
+<select id="food2category" parameterType="map" resultType="foodDto">
+		SELECT * FROM FOOD WHERE FOODNAME=#{foodname}
+		</select>
+	
+<!-- 리뷰 등록		 -->
+	<insert id="insertreview" parameterType="map">
+	INSERT INTO REVIEW VALUES(RUHUNGRY.REVIEW_SEQ.nextval, #{category} , #{title}, #{id}, #{content}, SYSDATE )
+	</insert>	
+	
+<!-- 리뷰삭제 -->
+	<delete id="delreview" parameterType="map">
+		DELETE FROM REVIEW WHERE SEQ IN     
+		<foreach collection="seq" open="(" close=")" item="item"  separator=",">
+		#{item} 
+		</foreach>
+		AND ID=#{id}
+	</delete>	
+	
+	<!-- 리뷰상세보기 -->
+	<select id="detailreview" parameterType="map" resultType="reviewDto">
+		SELECT * FROM REVIEW WHERE SEQ=#{seq}
+	</select>	
+	
+<!-- 	리뷰 수정 -->
+<update id="updatereview" parameterType="map">
+		UPDATE REVIEW SET CONTENT=#{content} WHERE SEQ=#{seq}
+</update>
+
+<!-- 필터 리뷰리스트 -->
+	<select id="reviewlists"  resultType="reviewDto">
+		SELECT *
+		FROM REVIEW WHERE CATEGORY IN <foreach collection="categorys" open="(" close=")" separator="," item="item">
+		#{item}
+		</foreach>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+

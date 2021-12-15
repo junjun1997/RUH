@@ -10,7 +10,6 @@
 <html>
 <head>
 <%
-
  	String isS="n";	//사용여부를 나타내는 isS 정의(n는 사용가능, y은 사용못함)
 	String resultId=(String)request.getAttribute("resultId");
 	if(resultId!=null){

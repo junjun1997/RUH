@@ -37,6 +37,5 @@
 	<!-- Transaction처리 방법 2가지: 1.선언적 처리, 2.AOP 처리 -->
 	
 	<!--1.선언적 처리 @transactional 어노테이션을 사용해서 진행 -->
-	<tx:annotation-driven transaction-manager="transactionManager"
-	    proxy-target-class="true" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

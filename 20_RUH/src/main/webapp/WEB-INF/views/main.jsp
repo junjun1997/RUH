@@ -1,6 +1,14 @@
 <%@page import="com.hk.ruh.dtos.UsersDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<%response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+  <%
+   UsersDto udto = (UsersDto)session.getAttribute("usersDto");
+%>	
+
+
 
 
 <!DOCTYPE html>
@@ -19,14 +27,9 @@
     <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
       <link href="assets/css/theme.css" rel="stylesheet" />
-      <%
-   UsersDto udto = (UsersDto)session.getAttribute("usersDto");
 
-   if(udto==null){
-      pageContext.forward("home.jsp");
-   }
-%>
-<script type="text/javascript" src="jquery-3.6.0.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+
 <script type="text/javascript">
 var imgArray = new Array();
 var randomNum;
@@ -57,13 +60,12 @@ function insertChosen() {
 	var foodname=matchjson[""+randomNum+""];
 	alert(foodname);
 	$.ajax({
-		url: "RouletteController.do",
-		traditional:true,
-		data: {"command": "insertchosen","foodname" : foodname },		
+		url: "insertchosen.do",
+		data: {"foodname" : foodname },		
 		method:"POST",
 		dataType: "Text",
-		success: function(val) {	// val=foodname
-			alert(""+ val +"을 선택해 주셔서 감사합니다 " );
+		success: function(returns) {	// val=foodname
+			alert(returns);
 		}
 		})
 }
@@ -72,7 +74,7 @@ function insertChosen() {
 
 function showPopup() {
    alert("hi");
-   window.open("location.jsp", "위치설정 팝업", "width=600, height=500, left=100, top=50");
+   window.open("nowlocation.do?id=${usersDto.id}"   , "위치설정 팝업", "width=600, height=500, left=100, top=50");
 };
 
 
@@ -189,10 +191,11 @@ function showPopup() {
 </head>
 
 <body>
+
   <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
       
-        <div class="container"><a class="navbar-brand d-inline-flex" href="main.jsp"><img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">RU Hungry</span></a>
+        <div class="container"><a class="navbar-brand d-inline-flex" href="main.do"><img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">RU Hungry</span></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
           <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
           
@@ -212,7 +215,7 @@ function showPopup() {
             <br />
          
          
-         <button class="btn1" type="submit" onclick="location.href='index.jsp'">LogOut</button>
+         <button class="btn1" type="submit" onclick="location.href='logout.do'">LogOut</button>
          <br />
             
          
@@ -255,7 +258,7 @@ function showPopup() {
          <div class="col-sm-6 col-md-3 mb-6">
                   <div class="text-center">
          <button type="button" class="btnbg2">
-            <img class="shadow-icon" src="assets/img/gallery/order.png" height="180" alt="..."  onclick="location.href='choice.jsp'"/>
+            <img class="shadow-icon" src="assets/img/gallery/order.png" height="180" alt="..."  onclick="location.href='review.do'"/>
          </button>
            <h4><span class="b2 text-primary">Review</span></h4>
          </div>
@@ -264,7 +267,7 @@ function showPopup() {
          <div class="col-sm-6 col-md-3 mb-6">
            <div class="text-center">
          <button type="button" class="btnbg3">
-            <img class="shadow-icon" src="assets/img/gallery/location.png" height="180" alt="..." onclick="location.href='map.jsp'"/>
+            <img class="shadow-icon" src="assets/img/gallery/location.png" height="180" alt="..." onclick="location.href='map.do'"/>
          </button>
          <h4><span class="b3 text-primary">Map</span></h4>
          </div>

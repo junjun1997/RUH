@@ -7,9 +7,14 @@
 	<!-- 변수 설정 -->
 	<typeAliases>
 		<typeAlias type="com.hk.ruh.dtos.UsersDto" alias="usersDto"/>
+		<typeAlias type="com.hk.ruh.dtos.FoodDto" alias="foodDto"/>
+		<typeAlias type="com.hk.ruh.dtos.ReviewDto" alias="reviewDto"/>
+		<typeAlias type="com.hk.ruh.dtos.RestlistDto" alias="restlistDto"/>
 	</typeAliases>
 	 
 	<mappers>
 	  <mapper resource="./sqls/loginMapper.xml"/>
+	  <mapper resource="./sqls/rouletteMapper.xml"/>
+	  <mapper resource="./sqls/reviewMapper.xml"/>
 	</mappers>
 </configuration>

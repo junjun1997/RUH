@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hk.ruh.roulette">
+
+<!-- 이름에 맞는 음식 하나 가져오기 -->
+	<select id="returnfood" parameterType="map" resultType="foodDto">
+		SELECT *
+		FROM FOOD
+		WHERE  FOODNAME=#{foodname} 
+	</select>
+	
+<!-- 룰렛에서 선택한 이름에 맞는 음식 하나 저장하기 -->
+	<insert id="insertchosen" parameterType="map">
+		INSERT INTO LIKEFOOD VALUES(RUHUNGRY.LIKEFOOD_SEQ.nextval, #{id}, #{foodname} , #{category})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+

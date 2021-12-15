@@ -21,8 +21,17 @@
 			 #{sex}, #{birth}, #{email}, #{si}, #{gu}, #{admin}, #{delflag},SYSDATE)
 			
 	</insert>
+<!-- 현재 주소가져오기 -->
+	<select id="nowlocation" parameterType="map" resultType="usersDto">
+		SELECT SEQ ,ID ,PW ,NAME ,SEX ,BIRTH ,EMAIL,SI, GU,ADMIN
+		FROM USERS
+		WHERE ID=#{id} AND DELFLAG='y'
+	</select>
 
-	
+<!-- 현재 주소 수정하기 -->
+	<select id="updatelocation" parameterType="map" >
+		UPDATE USERS SET SI=#{si}, GU=#{gu}  WHERE ID=#{id}
+	</select>
 </mapper>
 
 

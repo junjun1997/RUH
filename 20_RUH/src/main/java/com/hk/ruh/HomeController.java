@@ -1,10 +1,7 @@
 package com.hk.ruh;
 
-import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hk.ruh.daos.IUsersDao;
 import com.hk.ruh.dtos.UsersDto;
 import com.hk.ruh.service.IUsersService;
-import com.hk.ruh.dtos.AddressDto;
 
 @Controller
 public class HomeController {
@@ -44,8 +39,16 @@ public class HomeController {
 		return "main";
 	}
 	
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logout(Locale locale, Model model,HttpServletRequest request, HttpServletResponse response) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		HttpSession session=request.getSession();//session객체 구함
+		session.removeAttribute("usersDto");
+		return "home";
+	}
+	
 	@ResponseBody
-	@RequestMapping(value = "/getLogin.do", method = {RequestMethod.GET , RequestMethod.POST})
+	@RequestMapping(value = "/getLogin.do", method = {RequestMethod.GET , RequestMethod.POST},produces ="text/html; charset=utf-8")
 	public String getLogin(String id, String pw, Locale locale, Model model, HttpServletRequest request, HttpServletResponse response)  {
 		logger.info("getLogin (로그인 컨트롤러) {}.", locale);
 	
@@ -58,9 +61,9 @@ public class HomeController {
 		System.out.println(dto);
 		String returns="";
 		if(dto==null  ) {
-			returns= "<script type='text/javascript'>location.href='home.do';alert('login fail');</script>";	 
+			returns= "<script type='text/javascript'>location.href='home.do';alert('login 실패');</script>";	 
 		}else if(dto!= null) {
-			returns="<script type='text/javascript'>location.href='main.do';alert('login success');</script>";	
+			returns="<script type='text/javascript'>location.href='main.do';alert('login 성공');</script>";	
 		}
 		
 		return returns;
@@ -77,7 +80,7 @@ public class HomeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/getRegist.do", method = {RequestMethod.GET , RequestMethod.POST})
+	@RequestMapping(value = "/getRegist.do", method = {RequestMethod.GET , RequestMethod.POST}, produces ="text/html; charset=utf-8")
 	public String getRegist(String idr, String pw, String name, String si, String gu , String sexchk, String birth, String email, Locale locale, Model model, HttpServletRequest request)  {
 		logger.info("getRegist) {}.", locale);
 		 SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,9 +96,9 @@ public class HomeController {
 		
 		 String returns= "";
 		 if(isS==true) {
-			 returns="<script type='text/javascript'>location.href='home.do';alert('regist succees');</script>";
+			 returns="<script type='text/javascript'>location.href='home.do';alert('회원가입 성공');</script>";
 		 }else {
-			 returns="<script type='text/javascript'>location.href='home.do';alert('regist fail');</script>";
+			 returns="<script type='text/javascript'>location.href='home.do';alert('회원가입 실패');</script>";
 		 }
 		
 		return returns;

@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.hk.ruh.dtos.AddressDto;
 import com.hk.ruh.dtos.UsersDto;
 
 
@@ -47,8 +46,23 @@ public class UsersDao implements IUsersDao{
 		return idchk;
 	}
 
-
+	//주소 가져오기
+		public UsersDto viewlocation(String id) {
+			Map<String, String>map=new HashMap();
+			map.put("id", id);
+			UsersDto dto=sqlSession.selectOne(namespace+"nowlocation", map);
+			return dto;
+		}
 		
+		//주소 수정하기
+		public boolean updatelocation(String id, String si, String gu) {
+			Map<String, String>map=new HashMap();
+			map.put("id", id);
+			map.put("si", si);
+			map.put("gu", gu);
+			int isS=sqlSession.update(namespace+"updatelocation",map);
+			return isS>0? true:false;
+		}
 
 
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hk.ruh.daos.IUsersDao;
-import com.hk.ruh.dtos.AddressDto;
+
 import com.hk.ruh.dtos.UsersDto;
 
 @Service
@@ -28,6 +28,21 @@ public class UsersService implements IUsersService {
 	@Override
 	public boolean Regist(UsersDto dto) {
 		boolean isS=idao.Regist(dto);
+		return isS;
+	}
+	
+	@Override
+	public UsersDto viewlocation(String id) {
+		// TODO Auto-generated method stub
+		UsersDto dto= idao.viewlocation(id);
+		
+		return dto;
+	}
+	
+	@Override
+	public  boolean updatelocation(String id, String si, String gu) {
+		boolean isS=idao.updatelocation(id,si,gu);
+		
 		return isS;
 	}
 }
